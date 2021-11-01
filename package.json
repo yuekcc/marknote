@@ -1,0 +1,48 @@
+{
+  "name": "marknote",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild --bundle --minify --target=chrome70 --platform=browser --outdir=dist src/index.js"
+  },
+  "author": "yuekcc",
+  "license": "MIT",
+  "prettier": {
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "endOfLine": "auto"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es2020": true,
+      "jest": true,
+      "mocha": true,
+      "node": true
+    },
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "plugins": [
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ]
+  },
+  "devDependencies": {
+    "esbuild": "^0.13.12",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.0"
+  },
+  "dependencies": {
+    "marked": "^3.0.8"
+  }
+}

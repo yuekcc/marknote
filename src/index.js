@@ -5,6 +5,7 @@ const $ = document.querySelector.bind(document);
 const $sidebar = $('#sidebar');
 const $post = $('#content');
 const $menuSwitch = $('.sidebar-control button');
+const config = window.marknoteConfig;
 
 let menuIsShowing = false;
 
@@ -44,7 +45,7 @@ function renderMarkdown(url, defaultResult = 'not found') {
 
 function renderContent(hash = '') {
   const url = hash.startsWith('#') ? hash.slice(1) : hash;
-  return renderMarkdown(url || 'README.md').then(html => {
+  return renderMarkdown(url || config.homePage || 'README.md').then(html => {
     $post.innerHTML = html;
   });
 }
@@ -68,6 +69,13 @@ function renderSidebar() {
   });
 }
 
+function renderCustomContent() {
+  const { siteName } = config || {};
+  if (siteName) {
+    document.title = siteName || '';
+  }
+}
+
 window.addEventListener('popstate', () => {
   renderContent(location.hash);
 });
@@ -76,3 +84,4 @@ $menuSwitch.addEventListener('click', clickMenuControl);
 
 renderSidebar();
 renderContent(location.hash);
+renderCustomContent();

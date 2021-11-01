@@ -113,7 +113,7 @@ blockquote {
   position: relative;
   color: #999;
   font-weight: 400;
-  border-left: 1px solid #1abc9c;
+  border-left: 1px solid #0066ff;
   padding-left: 1em;
   margin: 1em 3em 1em 2em;
 }
@@ -194,7 +194,7 @@ sub {
 
 /* 让链接在 hover 状态下显示下划线 */
 a {
-  color: #1abc9c;
+  color: #0066ff;
 }
 
 a:hover {
@@ -202,7 +202,7 @@ a:hover {
 }
 
 .typo a {
-  border-bottom: 1px solid #1abc9c;
+  border-bottom: 1px solid #0066ff;
 }
 
 .typo a:hover {
@@ -596,4 +596,16 @@ body {
     padding: 1rem 3rem 3rem 3rem;
     width: 960px;
   }
+}
+
+.menu-icon {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItbWVudSI+PGxpbmUgeDE9IjMiIHkxPSIxMiIgeDI9IjIxIiB5Mj0iMTIiPjwvbGluZT48bGluZSB4MT0iMyIgeTE9IjYiIHgyPSIyMSIgeTI9IjYiPjwvbGluZT48bGluZSB4MT0iMyIgeTE9IjE4IiB4Mj0iMjEiIHkyPSIxOCI+PC9saW5lPjwvc3ZnPg==);
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 32px;
+}
+
+.sidebar-control button {
+  border: 0;
+  background-color: transparent;
 }

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild --bundle --minify --target=chrome70 --platform=browser --outdir=dist src/index.js"
+    "build": "esbuild --bundle --minify --target=chrome70 --platform=browser --outdir=dist src/index.js",
+    "serve": "sirv . --dev"
   },
   "author": "yuekcc",
   "license": "MIT",

@@ -8,20 +8,30 @@
     <link rel="stylesheet" href="dist/index.css" />
   </head>
   <body>
-    <nav class="sidebar-control">
-      <button>🎹</button>
-    </nav>
+    <div class="top-nav f">
+      <div class="f-fixed sidebar-control">
+        <button>📙</button>
+      </div>
+      <div class="f-auto">
+        <a href="/#/README.md"><h1 class="site-name">Marknote</h1></a>
+      </div>
+      <div class="f-fixed links">
+        <a href="/#/docs/deploy-on-github.md">部署</a>
+        <a href="https://github.com/yuekcc/marknote" target="_blank">GitHub</a>
+      </div>
+    </div>
+
     <div class="container f">
       <aside id="sidebar" class="f-fixed"></aside>
-      <article id="content" class="f-auto typo"></article>
+      <div class="f-auto content-wrapper">
+        <article id="content" class="markdown-body"></article>
+      </div>
     </div>
 
     <script>
       window.marknoteConfig = {
         // 网站名称
         siteName: `marknote - 简单笔记`,
-        // 首页
-        homePage: 'README.md',
       };
     </script>
     <script src="dist/index.js"></script>

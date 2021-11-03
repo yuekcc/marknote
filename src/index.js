@@ -1,4 +1,7 @@
 import marked from 'marked';
+
+import 'minireset.css/minireset.css';
+import 'github-markdown-css/github-markdown-light.css';
 import './style.css';
 
 const $ = document.querySelector.bind(document);
@@ -45,7 +48,7 @@ function renderMarkdown(url, defaultResult = 'not found') {
 
 function renderContent(hash = '') {
   const url = hash.startsWith('#') ? hash.slice(1) : hash;
-  return renderMarkdown(url || config.homePage || 'README.md').then(html => {
+  return renderMarkdown(url || 'README.md').then(html => {
     $post.innerHTML = html;
   });
 }
@@ -74,6 +77,8 @@ function renderCustomContent() {
   if (siteName) {
     document.title = siteName || '';
   }
+
+  document.querySelector('.site-name').textContent = siteName || '';
 }
 
 window.addEventListener('popstate', () => {

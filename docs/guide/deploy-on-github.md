@@ -1,4 +1,4 @@
-# marknote 部署到 github
+# 部署到 github pages
 
 github 带有免费的 page 服务。可以托管一些静态的内容。
 

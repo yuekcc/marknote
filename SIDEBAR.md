@@ -1,3 +1,5 @@
-## 分类
-
-- [部署到 github page](docs/deploy-on-github.md)
+- 分类
+  - [部署](docs/guide/deploy-on-github.md?sidebar=docs/guide/SIDEBAR.md)
+- 类似项目
+  - [docsify](https://docsify.js.org)
+  - [book-cli](https://github.com/vvpvvp/book-cli)

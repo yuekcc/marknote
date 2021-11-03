@@ -28,6 +28,34 @@
 
 所有自定义的配置内容都在 `index.html` 里的 `window.marknoteConfig` 代码。
 
+```js
+window.marknoteConfig = {
+  siteName: '站点名称' // 网站的名称，最终会显示为窗口的标题及顶部导航的左则
+}
+```
+
+## 侧栏
+
+现在已经支持多个侧栏文件，默认使用 `SIDEBAR.md`，通过的连接中指定 `sidebar=xxxx.md` 可以指定使用侧栏文件。
+
+如： 
+
+在 `index.html` 中
+
+```html
+<!-- ... -->
+<a href="/#/docs/deploy-on-github.md?sidebar=guide-sidebar.md">部署</a>
+<!-- ... -->
+```
+
+在 `SIDEBAR.md` 中也支持指定侧栏：
+
+```md
+- [部署到 github pages](docs/guide/deploy-on-github.md)
+- [部署到 codeberg pages](docs/guide/deploy-on-codeberg.md)
+```
+
+
 ## 修改样式、二次开发
 
 核心代码在 [src/index.js](src/index.js)，需要使用 nodejs 进行构建。全部样式目前都在 [src/style.css](src/style.css)。

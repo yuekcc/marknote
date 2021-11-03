@@ -1,0 +1,2 @@
+- [部署到 github pages](docs/guide/deploy-on-github.md)
+- [部署到 codeberg pages](docs/guide/deploy-on-codeberg.md)

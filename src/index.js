@@ -40,20 +40,7 @@ class Marknote {
 
     this._menuIsShowing = false;
 
-    window.addEventListener('popstate', () => {
-      const [url, queryParams] = location.hash.split('?');
-      this._renderContent(url);
-
-      let sidebarFileName = 'SIDEBAR.md';
-      if (queryParams) {
-        const params = new URLSearchParams(queryParams);
-        const name = params.get('sidebar');
-        sidebarFileName = name || sidebarFileName;
-      }
-
-      this._renderSidebar(sidebarFileName);
-    });
-
+    window.addEventListener('popstate', this._renderSidebarAndContent.bind(this));
     this.$menuSwitch.addEventListener('click', this._clickOnMenu.bind(this));
   }
 
@@ -65,6 +52,20 @@ class Marknote {
     }
 
     this._menuIsShowing = !this._menuIsShowing;
+  }
+
+  _renderSidebarAndContent() {
+    const [url, queryParams] = location.hash.split('?');
+    this._renderContent(url);
+
+    let sidebarFileName = 'SIDEBAR.md';
+    if (queryParams) {
+      const params = new URLSearchParams(queryParams);
+      const name = params.get('sidebar');
+      sidebarFileName = name || sidebarFileName;
+    }
+
+    this._renderSidebar(sidebarFileName);
   }
 
   _renderSidebar(sidebarFileName = 'SIDEBAR.md') {
@@ -82,7 +83,12 @@ class Marknote {
           return;
         }
 
-        const hash = `#${url.pathname}${url.search}`;
+        // 渲染侧栏时，自动加上 sidebar 参数
+        if (!url.searchParams.has('sidebar')) {
+          url.searchParams.set('sidebar', sidebarFileName);
+        }
+
+        const hash = `#${url.pathname}?${url.searchParams}`;
         it.setAttribute('href', hash);
       });
 
@@ -115,9 +121,8 @@ class Marknote {
   }
 
   render() {
-    this._renderSidebar();
+    this._renderSidebarAndContent();
     this._renderCustomContent();
-    this._renderContent(location.hash);
   }
 }
 

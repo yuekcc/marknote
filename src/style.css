@@ -114,6 +114,10 @@ body {
   display: none;
 }
 
+.permalink {
+  display: none;
+}
+
 @media screen and (min-width: 1080px) {
   .sidebar-control {
     display: none;
@@ -121,28 +125,28 @@ body {
 
   #sidebar {
     border-right: 1px solid #cfcfcf;
+    bottom: 0;
     height: 100vh;
+    left: 0;
     overflow: auto;
     padding: 2rem;
     padding-top: 5rem;
     position: fixed;
-    left: 0;
     top: 0;
-    bottom: 0;
     width: 300px;
   }
 
   #sidebar.showing {
-    display: block;
+    border-right: 1px solid #cfcfcf;
+    bottom: 0;
+    height: 100vh;
+    left: 0;
     overflow: auto;
     padding: 2rem;
-    position: sticky;
-    bottom: unset;
-    left: 0;
-    right: unset;
+    padding-top: 5rem;
+    position: fixed;
     top: 0;
     width: 300px;
-    background-color: #fff;
     z-index: 100;
   }
 
@@ -197,5 +201,13 @@ body {
     margin: 0;
     width: 100%;
     max-width: 100%;
+  }
+
+  .permalink {
+    display: block;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f1f1;
+    color: #ccc;
   }
 }

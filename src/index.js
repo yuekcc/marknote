@@ -1,26 +1,9 @@
-import marked from 'marked';
-
-import 'minireset.css/minireset.css';
 import 'github-markdown-css/github-markdown-light.css';
+import marked from 'marked';
+import 'minireset.css/minireset.css';
 import './style.css';
 
 const $ = document.querySelector.bind(document);
-const $sidebar = $('#sidebar');
-const $post = $('#content');
-const $menuSwitch = $('.sidebar-control button');
-const config = window.marknoteConfig;
-
-let menuIsShowing = false;
-
-function clickMenuControl() {
-  if (menuIsShowing) {
-    $sidebar.classList.remove('showing');
-  } else {
-    $sidebar.classList.add('showing');
-  }
-
-  menuIsShowing = !menuIsShowing;
-}
 
 function fetchText(url) {
   return fetch(url).then(resp => {
@@ -46,47 +29,79 @@ function renderMarkdown(url, defaultResult = 'not found') {
     });
 }
 
-function renderContent(hash = '') {
-  const url = hash.startsWith('#') ? hash.slice(1) : hash;
-  return renderMarkdown(url || 'README.md').then(html => {
-    $post.innerHTML = html;
-  });
-}
+class Marknote {
+  constructor(config) {
+    this._config = config;
+    this.$sidebar = $('#sidebar');
+    this.$post = $('#content');
+    this.$menuSwitch = $('.sidebar-control button');
+    this.$siteName = $('.site-name');
+    this.$permalink = $('.permalink');
 
-function renderSidebar() {
-  return renderMarkdown('SIDEBAR.md', '').then(html => {
-    const parser = new DOMParser();
-    const dom = parser.parseFromString(html, 'text/html');
+    this._menuIsShowing = false;
 
-    dom.querySelectorAll('a').forEach(it => {
-      const url = new URL(it.href);
-      const hash = `#${url.pathname}${url.search}`;
-      it.setAttribute('href', hash);
+    window.addEventListener('popstate', () => {
+      this._renderContent(location.hash);
     });
 
-    $sidebar.innerHTML = dom.body.innerHTML;
-
-    $sidebar.querySelectorAll('a').forEach(it => {
-      it.addEventListener('click', clickMenuControl);
-    });
-  });
-}
-
-function renderCustomContent() {
-  const { siteName } = config || {};
-  if (siteName) {
-    document.title = siteName || '';
+    this.$menuSwitch.addEventListener('click', this._clickOnMenu.bind(this));
   }
 
-  document.querySelector('.site-name').textContent = siteName || '';
+  _clickOnMenu() {
+    if (this._menuIsShowing) {
+      this.$sidebar.classList.remove('showing');
+    } else {
+      this.$sidebar.classList.add('showing');
+    }
+
+    this._menuIsShowing = !this._menuIsShowing;
+  }
+
+  _renderSidebar() {
+    return renderMarkdown('SIDEBAR.md', '').then(html => {
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(html, 'text/html');
+
+      dom.querySelectorAll('a').forEach(it => {
+        const url = new URL(it.href);
+        const hash = `#${url.pathname}${url.search}`;
+        it.setAttribute('href', hash);
+      });
+
+      this.$sidebar.innerHTML = dom.body.innerHTML;
+
+      this.$sidebar.querySelectorAll('a').forEach(it => {
+        it.addEventListener('click', this._clickOnMenu.bind(this));
+      });
+    });
+  }
+
+  _renderCustomContent() {
+    const { siteName } = this._config || {};
+    if (siteName) {
+      document.title = siteName || '';
+    }
+
+    this.$siteName.textContent = siteName || '';
+  }
+
+  _renderContent(hash = '') {
+    const url = hash.startsWith('#') ? hash.slice(1) : hash;
+    return renderMarkdown(url || 'README.md')
+      .then(html => {
+        this.$post.innerHTML = html;
+      })
+      .then(() => {
+        this.$permalink.textContent = `原文连接：${location.href}`;
+      });
+  }
+
+  render() {
+    this._renderSidebar();
+    this._renderCustomContent();
+    this._renderContent(location.hash);
+  }
 }
 
-window.addEventListener('popstate', () => {
-  renderContent(location.hash);
-});
-
-$menuSwitch.addEventListener('click', clickMenuControl);
-
-renderSidebar();
-renderContent(location.hash);
-renderCustomContent();
+const notes = new Marknote(window.marknoteConfig);
+notes.render();

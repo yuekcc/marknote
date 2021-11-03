@@ -41,7 +41,17 @@ class Marknote {
     this._menuIsShowing = false;
 
     window.addEventListener('popstate', () => {
-      this._renderContent(location.hash);
+      const [url, queryParams] = location.hash.split('?');
+      this._renderContent(url);
+
+      let sidebarFileName = 'SIDEBAR.md';
+      if (queryParams) {
+        const params = new URLSearchParams(queryParams);
+        const name = params.get('sidebar');
+        sidebarFileName = name || sidebarFileName;
+      }
+
+      this._renderSidebar(sidebarFileName);
     });
 
     this.$menuSwitch.addEventListener('click', this._clickOnMenu.bind(this));
@@ -57,13 +67,21 @@ class Marknote {
     this._menuIsShowing = !this._menuIsShowing;
   }
 
-  _renderSidebar() {
-    return renderMarkdown('SIDEBAR.md', '').then(html => {
+  _renderSidebar(sidebarFileName = 'SIDEBAR.md') {
+    return renderMarkdown(sidebarFileName, '').then(html => {
       const parser = new DOMParser();
       const dom = parser.parseFromString(html, 'text/html');
+      const currentHost = location.host;
 
       dom.querySelectorAll('a').forEach(it => {
         const url = new URL(it.href);
+
+        // host 与当前页面不一致的，属于外部连接，保持原样
+        if (url.host !== currentHost) {
+          it.setAttribute('target', '_blank');
+          return;
+        }
+
         const hash = `#${url.pathname}${url.search}`;
         it.setAttribute('href', hash);
       });

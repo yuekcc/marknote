@@ -1,9 +1,42 @@
-import 'github-markdown-css/github-markdown-light.css';
 import marked from 'marked';
+
+import 'github-markdown-css/github-markdown-light.css';
 import 'minireset.css/minireset.css';
 import './style.css';
 
 const $ = document.querySelector.bind(document);
+
+const renderer = {
+  paragraph(text) {
+    if (text === '[TOC]') {
+      return `<p id="toc"></p>`;
+    }
+
+    return `<p>${text}</p>`;
+  },
+};
+
+marked.use({ renderer });
+
+function _renderMarkdown(text) {
+  const headings = [];
+  const walkTokens = token => {
+    if (token.type === 'heading') {
+      headings.push({
+        level: token.depth,
+        text: token.text,
+        id: token.text,
+      });
+    }
+  };
+
+  marked.use({ walkTokens });
+  const rendered = marked(text);
+  return {
+    headings,
+    html: rendered,
+  };
+}
 
 function fetchText(url) {
   return fetch(url).then(resp => {
@@ -15,18 +48,22 @@ function fetchText(url) {
   });
 }
 
-function renderMarkdown(url, defaultResult = 'not found') {
-  return fetchText(url)
-    .then(text => {
-      if (text) {
-        return marked(text);
-      }
+async function renderMarkdown(url, defaultResult = 'not found') {
+  const _defaultResult = {
+    html: defaultResult,
+    headings: [],
+  };
 
-      return defaultResult;
-    })
-    .catch(() => {
-      return defaultResult;
-    });
+  try {
+    const text = await fetchText(url);
+    if (!text) {
+      return _defaultResult;
+    }
+
+    return _renderMarkdown(text);
+  } catch {
+    return _defaultResult;
+  }
 }
 
 class Marknote {
@@ -69,7 +106,7 @@ class Marknote {
   }
 
   _renderSidebar(sidebarFileName = 'SIDEBAR.md') {
-    return renderMarkdown(sidebarFileName, '').then(html => {
+    return renderMarkdown(sidebarFileName, '').then(({ html }) => {
       const parser = new DOMParser();
       const dom = parser.parseFromString(html, 'text/html');
       const currentHost = location.host;
@@ -109,15 +146,39 @@ class Marknote {
     this.$siteName.textContent = siteName || '';
   }
 
-  _renderContent(hash = '') {
+  async _renderContent(hash = '') {
     const url = hash.startsWith('#') ? hash.slice(1) : hash;
-    return renderMarkdown(url || 'README.md')
-      .then(html => {
-        this.$post.innerHTML = html;
-      })
-      .then(() => {
-        this.$permalink.textContent = `原文连接：${location.href}`;
+
+    const { html, headings } = await renderMarkdown(url || 'README.md');
+
+    this.$post.innerHTML = html;
+    this.$permalink.textContent = `原文连接：${location.href}`;
+
+    setTimeout(() => {
+      const tocHtml = this._renderToc(headings);
+      const $toc = document.querySelector('#toc');
+      $toc.innerHTML = tocHtml;
+
+      $toc.addEventListener('click', ({ target }) => {
+        const headerId = target.dataset.headerId;
+        if (!headerId) {
+          return;
+        }
+
+        document.getElementById(headerId.toLowerCase()).scrollIntoView({ block: 'start', inline: 'nearest' });
       });
+    }, 0);
+  }
+
+  _renderToc(headings) {
+    const inner = headings
+      .map(
+        heading =>
+          `<li><a class="toc-header level-${heading.level} clickable" data-header-id="${heading.id}">${heading.text}</a></li>`,
+      )
+      .join('');
+
+    return `<h2>目录</h2><ul>${inner}</ul>`;
   }
 
   render() {

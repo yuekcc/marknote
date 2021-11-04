@@ -38,6 +38,10 @@ pre tt {
   flex: 1;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 body {
   height: 100vh;
   position: relative;

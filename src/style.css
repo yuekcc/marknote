@@ -49,6 +49,7 @@ body {
 
 .top-nav {
   border-bottom: 1px solid #ccc;
+  box-shadow: 0 -.4rem .5rem .2rem #00000080;
   padding: 1rem;
   position: fixed;
   top: 0;
@@ -176,6 +177,7 @@ body {
 
   .links a:hover {
     color: #0969da;
+    font-weight: 600;
   }
 }
 

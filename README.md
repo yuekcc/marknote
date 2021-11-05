@@ -4,13 +4,14 @@
 
 特性：
 
-- 支持 markdown 书写文章、目录
-- 极简主义，回归本心
-  - 纯手工编辑目录（markdown 语法）
-  - 纯前端项目，**因此也不支持 SEO，也不计划支持**
-  - 自带简洁样式
-- 支持大屏、小屏设备
-- 自带打印机优化样式，通过浏览器打印功能，方便导出为 pdf 文件
+- [x] 极简主义
+  - [x] 极简主题
+    - [x] 支持大屏、小屏设备
+    - [x] 打印优化，方便导出文章为 PDF 文件
+  - [x] 手工实现文章关联
+  - [x] 支持 markdown 书写文章
+    - [x] 支持 `[TOC]` 拓展，可以自动抽取文章中 h1、h2 标题行，生成目录
+- [x] 纯前端项目，无后台服务 **不支持 SEO，也不计划支持**
 
 [TOC]
 
@@ -53,10 +54,10 @@ window.marknoteConfig = {
 在 `SIDEBAR.md` 中也支持指定侧栏：
 
 ```md
-- [部署到 github pages](docs/guide/deploy-on-github.md)
-- [部署到 codeberg pages](docs/guide/deploy-on-codeberg.md)
+- [部署](docs/guide/deploy-on-github.md?sidebar=docs/guide/SIDEBAR.md)
 ```
 
+**访问自定义侧栏时，同一侧栏内的连接会自动设置为同一个侧栏**，可以少写一些 `?sidebar=xxxx` 参数。
 
 ## 修改样式、二次开发
 

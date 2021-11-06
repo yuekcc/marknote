@@ -1,0 +1,35 @@
+@media print {
+  :root {
+    --common-space: 0;
+  }
+  
+  .top-nav {
+    display: none;
+  }
+
+  .container {
+    height: auto;
+    overflow: unset;
+  }
+
+  .container .sidebar {
+    display: none;
+  }
+
+  .container .content-wrapper {
+    display: block;
+    margin-left: 0;
+  }
+
+  .container .content-wrapper .content {
+    display: block;
+  }
+
+  .permalink {
+    display: block;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f1f1;
+    color: #ccc;
+  }
+}

@@ -1,0 +1,126 @@
+:root {
+  --blank: 24px;
+  --border-color: #ccc;
+  --linkable-color: #0969da;
+  --sidebar-width: 300px;
+  --text-color: #24292f;
+  --top-nav-height: 56px;
+  --bg-white: #ffffff;
+  --bg: var(--bg-white)
+}
+
+body, .markdown-body {
+  background-color: var(--bg);
+}
+
+.top-nav {
+  position: relative;
+  display: flex;
+  z-index: 200;
+  align-items: center;
+  width: 100%;
+  height: var(--top-nav-height);
+  padding-left: calc(0.5 * var(--blank));
+  padding-right: calc(0.5 * var(--blank));
+  box-shadow: 0 -4px 8px 2px #00000080;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.top-nav a {
+  text-decoration: none;
+}
+
+.top-nav a:active,
+.top-nav a:visited {
+  color: var(--text-color);
+}
+
+.top-nav a:hover {
+  background-color: var(--linkable-color);
+  color: white;
+}
+
+/* 小屏时的侧栏开关 */
+.top-nav .sidebar-control {
+  display: none;
+}
+
+.top-nav .site-name {
+  padding: calc(0.25 * var(--blank)) calc(0.5 * var(--blank));
+  font-weight: 600;
+}
+
+.top-nav .links a {
+  padding: calc(0.25 * var(--blank)) calc(0.5 * var(--blank));
+}
+
+.container {
+  height: calc(100vh - var(--top-nav-height));
+  overflow: hidden;
+  position: relative;
+}
+
+.container .sidebar {
+  display: block;
+  width: var(--sidebar-width);
+  padding: var(--blank);
+  border-right: 1px solid var(--border-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+.container .sidebar ul {
+  margin-bottom: calc(0.5 * var(--blank));
+  margin-left: var(--blank) !important;
+}
+
+.container .sidebar > ul {
+  margin-left: 0 !important;
+}
+
+.container .sidebar li {
+  line-height: 1.8;
+}
+
+.container .content-wrapper {
+  padding: var(--blank);
+  overflow: auto;
+  margin-left: var(--sidebar-width);
+}
+
+.container .content-wrapper .content {
+  max-width: 960px;
+}
+
+.permalink {
+  display: none;
+}
+
+/* 屏幕小于 1080px */
+@media screen and (max-width: 1080px) {
+  .top-nav .sidebar-control {
+    display: block !important;
+  }
+
+  .top-nav .links {
+    display: none;
+  }
+
+  .container .sidebar {
+    display: none;
+    background-color: white;
+    width: 100%;
+    border: 0;
+  }
+
+  .showing {
+    display: block !important;
+  }
+
+  .container .content-wrapper {
+    margin-left: 0;
+  }
+}

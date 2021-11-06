@@ -1,8 +1,10 @@
 import marked from 'marked';
 
-import 'github-markdown-css/github-markdown-light.css';
 import 'minireset.css/minireset.css';
+import 'github-markdown-css/github-markdown-light.css';
+import './layout.css';
 import './style.css';
+import './print.css';
 
 const $ = document.querySelector.bind(document);
 
@@ -71,7 +73,7 @@ class Marknote {
     this._config = config;
     this.$sidebar = $('#sidebar');
     this.$post = $('#content');
-    this.$menuSwitch = $('.sidebar-control button');
+    this.$menuSwitch = $('.sidebar-control');
     this.$siteName = $('.site-name');
     this.$permalink = $('.permalink');
 

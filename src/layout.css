@@ -5,12 +5,18 @@
   --sidebar-width: 300px;
   --text-color: #24292f;
   --top-nav-height: 56px;
-  --bg-white: #ffffff;
-  --bg: var(--bg-white)
+  --color-white: #ffffff;
+  --color-ruanyifeng: #f5f5d5;
+  --top-nav-bgc: var(--color-white);
+  --content-bgc: var(--color-white)
 }
 
-body, .markdown-body {
-  background-color: var(--bg);
+body, .container, .markdown-body {
+  background-color: var(--content-bgc);
+}
+
+.top-nav {
+  background-color: var(--color-white);
 }
 
 .top-nav {

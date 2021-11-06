@@ -11,7 +11,7 @@ const $ = document.querySelector.bind(document);
 const renderer = {
   paragraph(text) {
     if (text === '[TOC]') {
-      return `<p id="toc"></p>`;
+      return `<p id="toc" class="toc"></p>`;
     }
 
     return `<p>${text}</p>`;
@@ -20,19 +20,21 @@ const renderer = {
 
 marked.use({ renderer });
 
-function _renderMarkdown(text) {
-  const headings = [];
-  const walkTokens = token => {
-    if (token.type === 'heading') {
-      headings.push({
-        level: token.depth,
-        text: token.text,
-        id: token.text,
-      });
-    }
-  };
+let headings = [];
+const walkTokens = token => {
+  if (token.type === 'heading' && (token.depth === 2 || token.depth === 3)) {
+    headings.push({
+      level: token.depth,
+      text: token.text,
+      id: token.text,
+    });
+  }
+};
 
-  marked.use({ walkTokens });
+marked.use({ walkTokens });
+
+function _renderMarkdown(text) {
+  headings = [];
   const rendered = marked(text);
   return {
     headings,
@@ -50,7 +52,7 @@ function fetchText(url) {
   });
 }
 
-async function renderMarkdown(url, defaultResult = 'not found') {
+async function renderMarkdown(url, defaultResult = 'not found or render markdown failed') {
   const _defaultResult = {
     html: defaultResult,
     headings: [],
@@ -161,7 +163,8 @@ class Marknote {
       const $toc = document.querySelector('#toc');
       $toc.innerHTML = tocHtml;
 
-      $toc.addEventListener('click', ({ target }) => {
+      $toc.addEventListener('click', e => {
+        const { target } = e;
         const headerId = target.dataset.headerId;
         if (!headerId) {
           return;
@@ -176,7 +179,7 @@ class Marknote {
     const inner = headings
       .map(
         heading =>
-          `<li><a class="toc-header level-${heading.level} clickable" data-header-id="${heading.id}">${heading.text}</a></li>`,
+          `<li><a class="toc-header level-${heading.level} clickable" data-header-id="${heading.id}" href="javascript:void(0)">${heading.text}</a></li>`,
       )
       .join('');
 

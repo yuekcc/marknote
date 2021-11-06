@@ -6,6 +6,61 @@ import './layout.css';
 import './style.css';
 import './print.css';
 
+function _hash(str) {
+  if (!str || typeof str !== 'string') return 0;
+  let result = 0;
+  for (let i = 0; i < str.length; i++) {
+    result = ((result << 5) - result + str.charCodeAt(i)) | 0;
+    result = result & result;
+  }
+  return result;
+}
+
+function makeId(str) {
+  return `hash-` + _hash(str);
+}
+
+/**
+ *  将 heading 数据，重构为树结构
+ *
+ * 原来是平铺的结果，改为将子节点卷上最近的父节点
+ * 比如有 levels 的平铺数据：1 2 3 3 3 3 2 2 2 => {level: 1, children: [ { level: 2, children: [3 3 3 3 3]}, {level: 2}, {level: 2}]}
+ * @param {Array<{level: number; children: any[]; text: string; id: string}>} headings
+ */
+function treeify(headings) {
+  let root = {
+    level: 1,
+    children: [],
+  };
+
+  let visited = [root];
+  function top() {
+    return visited[visited.length - 1];
+  }
+
+  let i = 0;
+  while (i < headings.length) {
+    const parent = top();
+    const cur = headings[i];
+
+    if (parent.level < cur.level) {
+      parent.children.push(cur);
+      visited.push(cur);
+      i++;
+      continue;
+    }
+
+    if (parent.level >= cur.level) {
+      visited.pop();
+      continue;
+    }
+
+    i++;
+  }
+
+  return root.children;
+}
+
 const $ = document.querySelector.bind(document);
 
 const renderer = {
@@ -15,6 +70,10 @@ const renderer = {
     }
 
     return `<p>${text}</p>`;
+  },
+  heading(text, level) {
+    const tag = `h${level}`;
+    return `<${tag} id="${makeId(text)}">${text}</${tag}>`;
   },
 };
 
@@ -26,7 +85,8 @@ const walkTokens = token => {
     headings.push({
       level: token.depth,
       text: token.text,
-      id: token.text,
+      id: makeId(token.text),
+      children: [],
     });
   }
 };
@@ -176,14 +236,28 @@ class Marknote {
   }
 
   _renderToc(headings) {
-    const inner = headings
-      .map(
-        heading =>
-          `<li><a class="toc-header level-${heading.level} clickable" data-header-id="${heading.id}" href="javascript:void(0)">${heading.text}</a></li>`,
-      )
-      .join('');
+    console.log(headings);
 
-    return `<h2>目录</h2><ul>${inner}</ul>`;
+    function buildHtml(headings) {
+      const inner = headings.map(heading => {
+        let subLevelHtml = '';
+        if (heading.children.length > 0) {
+          subLevelHtml = buildHtml(heading.children);
+        }
+
+        return `<li>
+  <a class="toc-header level-${heading.level} clickable" data-header-id="${heading.id}" href="javascript:void(0)">
+    ${heading.text}
+  </a>
+  ${subLevelHtml}
+</li>`;
+      });
+
+      return `<ul>${inner.join('\n')}</ul>`;
+    }
+
+    const _headings = treeify(headings);
+    return `<h2>目录</h2>${buildHtml(_headings)}`;
   }
 
   render() {

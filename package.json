@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild --bundle --minify --target=chrome70 --platform=browser --outdir=dist src/index.js",
-    "watch": "esbuild --watch --bundle --sourcemap=inline --target=chrome70 --platform=browser --outdir=dist src/index.js",
+    "build": "esbuild --bundle --minify --target=chrome70 --platform=browser --outdir=dist src/index.js --loader:.svg=dataurl",
+    "watch": "esbuild --watch --bundle --sourcemap=inline --target=chrome70 --platform=browser --outdir=dist src/index.js  --loader:.svg=dataurl",
     "serve": "sirv --dev ."
   },
   "author": "yuekcc",

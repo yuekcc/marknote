@@ -1,10 +1,5 @@
 import marked from 'marked';
-
-import 'minireset.css/minireset.css';
-import 'github-markdown-css/github-markdown-light.css';
-import './layout.css';
-import './style.css';
-import './print.css';
+import './styles';
 
 function _hash(str) {
   if (!str || typeof str !== 'string') return 0;
@@ -148,8 +143,10 @@ class Marknote {
   _clickOnMenu() {
     if (this._menuIsShowing) {
       this.$sidebar.classList.remove('showing');
+      this.$menuSwitch.classList.remove('showing');
     } else {
       this.$sidebar.classList.add('showing');
+      this.$menuSwitch.classList.add('showing');
     }
 
     this._menuIsShowing = !this._menuIsShowing;

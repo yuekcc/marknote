@@ -1,0 +1,15 @@
+.f {
+  display: flex;
+}
+
+.f-fixed {
+  flex: initial;
+}
+
+.f-auto {
+  flex: 1;
+}
+
+.clickable {
+  cursor: pointer;
+}

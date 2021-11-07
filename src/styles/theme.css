@@ -8,10 +8,36 @@
   --color-white: #ffffff;
   --color-ruanyifeng: #f5f5d5;
   --top-nav-bgc: var(--color-white);
-  --content-bgc: var(--color-white)
+  --content-bgc: var(--color-white);
 }
 
-body, .container, .markdown-body {
+pre {
+  overflow: auto;
+  max-width: 100%;
+}
+
+pre,
+code,
+pre tt {
+  font-size: 0.85rem;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  height: 100vh;
+  position: relative;
+}
+
+.markdown-body ul {
+  list-style: disc;
+}
+
+body,
+.container,
+.markdown-body {
   background-color: var(--content-bgc);
 }
 
@@ -109,6 +135,16 @@ body, .container, .markdown-body {
 @media screen and (max-width: 1080px) {
   .top-nav .sidebar-control {
     display: block !important;
+  }
+
+  .top-nav .sidebar-control {
+    width: 24px;
+    height: 24px;
+    background: var(--icon-menu) no-repeat;
+  }
+
+  .top-nav .sidebar-control.showing {
+    background-image: var(--icon-close);
   }
 
   .top-nav .links {

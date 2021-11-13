@@ -1,4 +1,6 @@
 :root {
+  --default-font: 400 16px PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif,
+    WenQuanYi Micro Hei, sans-serif;
   --blank: 24px;
   --border-color: #ccc;
   --linkable-color: #0969da;
@@ -9,6 +11,20 @@
   --color-ruanyifeng: #f5f5d5;
   --top-nav-bgc: var(--color-white);
   --content-bgc: var(--color-white);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-rendering: optimizelegibility;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font: var(--default-font);
 }
 
 pre {

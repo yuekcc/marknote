@@ -173,6 +173,9 @@ class Marknote {
     this.$post.innerHTML = html;
     this.$permalink.textContent = `原文连接：${location.href}`;
 
+    // 渲染文章后，回到顶部
+    this._goBackToTop();
+
     setTimeout(() => {
       const $toc = document.querySelector('#toc');
       if (!$toc) {

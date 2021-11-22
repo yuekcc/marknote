@@ -32,4 +32,12 @@
     border-top: 1px solid #f1f1f1;
     color: #ccc;
   }
+
+  .back-to-top {
+    display: none;
+  }
+
+  .back-to-top.visible {
+    display: none;
+  }
 }

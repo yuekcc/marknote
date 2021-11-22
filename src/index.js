@@ -1,7 +1,6 @@
 import marked from 'marked';
-import { makeId, treeify } from './util';
-
 import './styles';
+import { makeId, scrollIntoView, treeify } from './util';
 
 const $ = document.querySelector.bind(document);
 
@@ -80,11 +79,14 @@ class Marknote {
     this.$menuSwitch = $('.sidebar-control');
     this.$siteName = $('.site-name');
     this.$permalink = $('.permalink');
+    this.$backToTop = $('.back-to-top');
+    this.$backToTopButton = $('.back-to-top .button');
 
     this._menuIsShowing = false;
 
     window.addEventListener('popstate', this._renderSidebarAndContent.bind(this));
     this.$menuSwitch.addEventListener('click', this._clickOnMenu.bind(this));
+    this.$backToTopButton.addEventListener('click', this._goBackToTop.bind(this));
   }
 
   _clickOnMenu() {
@@ -99,9 +101,14 @@ class Marknote {
     this._menuIsShowing = !this._menuIsShowing;
   }
 
+  _goBackToTop() {
+    scrollIntoView(this.$post);
+  }
+
   _renderSidebarAndContent() {
     const [url, queryParams] = location.hash.split('?');
     this._renderContent(url);
+    this._renderBackToTop();
 
     let sidebarFileName = 'SIDEBAR.md';
     if (queryParams) {
@@ -111,6 +118,10 @@ class Marknote {
     }
 
     this._renderSidebar(sidebarFileName);
+  }
+
+  _renderBackToTop() {
+    this.$backToTop.classList.add('visible');
   }
 
   _renderSidebar(sidebarFileName = 'SIDEBAR.md') {
@@ -178,7 +189,8 @@ class Marknote {
           return;
         }
 
-        document.getElementById(headerId.toLowerCase()).scrollIntoView({ block: 'start', inline: 'nearest' });
+        const el = document.getElementById(headerId.toLowerCase());
+        scrollIntoView(el);
       });
     }, 0);
   }

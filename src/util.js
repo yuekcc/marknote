@@ -58,3 +58,10 @@ export function updateInnerHtml(el, html) {
     el.innerHTML = html || '';
   }
 }
+
+export function scrollIntoView(el, options = {}) {
+  el &&
+    el.scrollIntoView &&
+    typeof el.scrollIntoView === 'function' &&
+    el.scrollIntoView({ block: 'start', inline: 'nearest', ...options });
+}

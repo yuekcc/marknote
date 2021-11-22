@@ -147,6 +147,28 @@ body,
   display: none;
 }
 
+.back-to-top {
+  display: none;
+  justify-content: flex-end;
+}
+
+.back-to-top .button {
+  width: 24px;
+  height: 24px;
+  background: var(--icon-back-to-top) no-repeat;
+  background-position: center center;
+  padding: 3px;
+}
+
+.back-to-top .button:hover {
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+}
+
+.back-to-top.visible {
+  display: flex;
+}
+
 /* 屏幕小于 1080px */
 @media screen and (max-width: 1080px) {
   .top-nav .sidebar-control {

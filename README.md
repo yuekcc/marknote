@@ -34,6 +34,7 @@
 ```js
 window.marknoteConfig = {
   siteName: '站点名称' // 网站的名称，最终会显示为窗口的标题及顶部导航的左则
+  basePath: '/marknote/' // 网站的基本地址，应该以 `/` 结尾，未配置时默认为 `/`
 }
 ```
 

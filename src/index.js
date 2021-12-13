@@ -144,7 +144,9 @@ class Marknote {
           url.searchParams.set('sidebar', sidebarFileName);
         }
 
-        const hash = `#${url.pathname}?${url.searchParams}`;
+        const basePath = this._config.basePath || '/';
+
+        const hash = `${basePath}#${url.pathname}?${url.searchParams}`;
         it.setAttribute('href', hash);
       });
 

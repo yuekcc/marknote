@@ -62,7 +62,12 @@ window.marknoteConfig = {
 
 ## 修改样式、二次开发
 
-核心代码在 [src/index.js](src/index.js)，需要使用 nodejs 进行构建。全部样式目前都在 [src/style.css](src/style.css)。
+核心代码在 [src/index.js](src/index.js)，需要使用 nodejs 进行构建。全部样式目前都在 [src/styles](src/styles)。
+
+## 快速修改样式
+
+在 `index.html` 的 body 标签中增加 `style="--top-nav-bgc: var(--color-ryf); --content-bgc: var(--color-ryf);"`
+可以使用内置的“护眼色”。
 
 ## LICENSE
 

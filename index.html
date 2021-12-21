@@ -9,7 +9,7 @@
     <title>marknote</title>
     <link rel="stylesheet" href="dist/index.css" />
   </head>
-  <body style="--top-nav-bgc: var(--color-ryf); --content-bgc: var(--color-ryf);">
+  <body >
     <div class="top-nav f">
       <div class="f-fixed sidebar-switch">
         <div class="clickable sidebar-control"></div>
@@ -29,7 +29,9 @@
       <aside id="sidebar" class="f-fixed sidebar"></aside>
       <div class="f-auto content-wrapper">
         <!-- 文章 -->
-        <article id="content" class="markdown-body content"></article>
+        <div style="width: 100%;">
+          <article id="content" class="markdown-body content" style="margin: 0 auto; max-width: 85%;"></article>
+        </div>
 
         <div class="back-to-top"><a href="javascript:;" class="button" title="回到顶部"></a></div>
       </div>

@@ -17,7 +17,7 @@
 
 ## 使用
 
-首先是 `git clone` 这个项目，然后打开你喜欢编辑器，可以开始写作了。
+首先是 `git clone` 这个项目，然后打开你喜欢编辑器，就可以开始写作。
 
 ## 约定
 
@@ -64,10 +64,28 @@ window.marknoteConfig = {
 
 核心代码在 [src/index.js](src/index.js)，需要使用 nodejs 进行构建。全部样式目前都在 [src/styles](src/styles)。
 
-## 快速修改样式
+## 使用内置的“护眼色”
 
 在 `index.html` 的 body 标签中增加 `style="--top-nav-bgc: var(--color-ryf); --content-bgc: var(--color-ryf);"`
 可以使用内置的“护眼色”。
+
+像这样：
+
+```html
+<!-- index.html -->
+<html>
+  <head>
+    <!-- ... -->
+  </head>
+  <body style="--top-nav-bgc: var(--color-ryf); --content-bgc: var(--color-ryf);">
+    <!-- ... -->
+  </body>
+</html>
+```
+
+## 语法高亮
+
+语法高亮是基于 prism 实现。marknote 项目 dist 目录中已经集成 `prism.js` 和 `prism.css`。如果需要使用定制的 prism.js，可以到 [https://prismjs.com/download.html](https://prismjs.com/download.html) 下载；然后替换 `dist` 目录里相应的文件。
 
 ## LICENSE
 

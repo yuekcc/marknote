@@ -120,7 +120,6 @@ class Marknote {
     }
 
     this._renderSidebar(sidebarFileName);
-    this._emit('rendered');
   }
 
   _renderBackToTop() {
@@ -177,6 +176,7 @@ class Marknote {
 
     this.$post.innerHTML = html;
     this.$permalink.textContent = `原文连接：${location.href}`;
+    this._emit('rendered');
 
     // 渲染文章后，回到顶部
     this._goBackToTop();
@@ -227,6 +227,7 @@ class Marknote {
   }
 
   _emit(name) {
+    console.log('#emit', name);
     const hooks = this._lifeCycleHooks[name] || [];
     setTimeout(() => hooks.forEach(it => it && typeof it === 'function' && it()), 0);
   }
@@ -246,9 +247,11 @@ class Marknote {
 }
 
 const notes = new Marknote(window.marknoteConfig);
-notes.render();
 notes.listen('rendered', () => {
+  console.log('try Prism#highlightAll');
   if (Prism && typeof Prism.highlightAll === 'function') {
-    Prism.highlightAll();
+    Prism.highlightAll(true);
   }
 });
+
+notes.render();
